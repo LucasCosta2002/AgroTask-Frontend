@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+/* .bg-imagen{
+    background-image: url(/fondoIndex.webp);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: auto;
+} */
+
+.bg-mi-verde{
+    background-color: #57a34a;
+}
+
+
+.text-mi-verde{
+    color: #61BF51;
+}
