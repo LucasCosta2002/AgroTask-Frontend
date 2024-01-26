@@ -46,6 +46,7 @@ const TrabajosProvider = ({children}) => {
     }
 
     const submitTrabajo = async trabajo =>{
+        console.log(trabajo);
         if(trabajo.id){
             await editarTrabajo(trabajo)
         }else{
@@ -110,7 +111,6 @@ const TrabajosProvider = ({children}) => {
     }
 
     const editarTrabajo = async trabajo =>{
-        console.log(trabajo.id);
         try {
             // obtener token del usuario (permisos)
             const token = localStorage.getItem("token")
@@ -124,9 +124,7 @@ const TrabajosProvider = ({children}) => {
                 }
             }
             // enviar peticion al backend
-
             const {data} = await clienteAxios.put(`/trabajos/${trabajo.id}`, trabajo, config)
-            console.log(data);
             //Sincronizar base de datos con state
 
             setAlerta({msg: "Trabajo Actualizado", error: false})
@@ -174,7 +172,6 @@ const TrabajosProvider = ({children}) => {
 
     const changeModalTrabajo = ()=>{
         setModalNuevoTrabajo(!modalNuevoTrabajo)
-
     }
 
     const handleModalEliminarTrabajo = ()=>{

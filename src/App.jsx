@@ -13,7 +13,6 @@ import Trabajos from './pages/Trabajos.jsx'
 import Clientes from './pages/Clientes.jsx'
 import Resumen from './pages/Resumen.jsx'
 import Trabajo from './pages/Trabajo.jsx'
-import EditarTrabajo from './pages/EditarTrabajo'
 
 
 function App() {
@@ -39,7 +38,7 @@ function App() {
 							<Route path='resumen' element={<Resumen/>}/>
 							<Route path='clientes' element={<Clientes/>}/>
 							<Route path=':id' element={<Trabajo/>}/>
-							<Route path='editar/:id' element={<EditarTrabajo/>}/>
+							{/* <Route path='editar/:id' element={<EditarTrabajo/>}/> */}
 						</Route>
 					</Routes>
 				</TrabajosProvider>

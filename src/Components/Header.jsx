@@ -1,5 +1,10 @@
+import useAuth from "../Hooks/useAuth"
+import ModalCerrarSesion from "./ModalCerrarSesion";
 
 const Header = () => {
+
+    const { handleModalCerrarSesion } = useAuth();
+
     return (
         <header className='p-5'>
             <div className='md:flex-row flex flex-col gap-4 md:justify-between md:items-center text-center'>
@@ -7,7 +12,8 @@ const Header = () => {
                 <div className='md:w-1/2 shadow-md'>
                     <input type='text' placeholder="Buscar" className="rounded-md p-2 w-full text-slate-300"/>
                 </div>
-                <button className='bg-red-600 p-2 mt-3 md:mt-0 text-white rounded-md font-bold transition-colors shadow-md hover:bg-red-700'>Cerrar Sesion</button>
+                <button onClick={handleModalCerrarSesion} className='bg-red-600 p-2 mt-3 md:mt-0 text-white rounded-md font-bold transition-colors shadow-md hover:bg-red-700'>Cerrar Sesion</button>
+                <ModalCerrarSesion />
             </div>
         </header>
     )

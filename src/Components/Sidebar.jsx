@@ -5,7 +5,7 @@ import useTrabajos from '../Hooks/useTrabajos';
 const Sidebar = () => {
 
     const {auth} = useAuth();
-    const {changeModalTrabajo} = useTrabajos()
+    const {changeModalTrabajo} = useTrabajos();
 
     return (
         <aside className='flex flex-col gap-5 p-4 pt-0 md:w-1/5'>

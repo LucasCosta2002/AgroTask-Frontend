@@ -4,8 +4,11 @@
 
 body{
     font-family: 'Poppins', sans-serif;
+    background-color: #dedede;
 }
-
+.disable-selection {
+    user-select: none;
+}
 /* .bg-imagen{
     background-image: url(/fondoIndex.webp);
     background-repeat: no-repeat;
@@ -20,4 +23,8 @@ body{
 
 .text-mi-verde{
     color: #61BF51;
+}
+
+.clip-bottom {
+    clip-path: polygon(100% 50%, 0 0, 100% 0, 50% 100%, 0 0)
 }
