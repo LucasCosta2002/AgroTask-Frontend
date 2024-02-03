@@ -29,6 +29,7 @@ const AuthProvider = ({children}) => {
                 return
             }    
 
+            //pasar el token de permiso como bearer token que espera el backend checkauth
             const config ={
                 headers:{
                     "Content-Type": "application/json",
@@ -36,11 +37,12 @@ const AuthProvider = ({children}) => {
                 }    
             }    
 
-            //pasar el token de permiso como bearer token que espera el backend checkauth
             try {
-                const {data} = await clienteAxios("/usuarios/perfil", config)
                 // traer el perfil desde base de datos
+                const {data} = await clienteAxios("/usuarios/perfil", config)
+                
                 setAuth(data)
+
                 navigate("/trabajos")
             } catch (error) {
                 setAuth({});

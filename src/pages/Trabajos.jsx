@@ -1,3 +1,4 @@
+import ModalTrabajo from "../Components/ModalTrabajo"
 import TableRow from "../Components/TableRow"
 import useTrabajos from "../Hooks/useTrabajos"
 
@@ -23,9 +24,8 @@ const Trabajos = () => { //outlet
                             <th scope="col" className="px-6 py-2 font-bold text-white text-xl">Acciones</th>
                         </tr>
                     </thead>
-
                     <tbody className="">
-                        {trabajos?.map(trabajo=>(
+                        {trabajos[0]?.map(trabajo=>(
                             <TableRow 
                                 key={trabajo._id}
                                 trabajo={trabajo}
@@ -35,6 +35,7 @@ const Trabajos = () => { //outlet
                     </tbody>
                 </table>
             </div>
+            <ModalTrabajo/> 
         </>
     )
 }

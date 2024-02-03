@@ -1,7 +1,8 @@
 import { useState, useEffect, createContext } from "react";
+import { useNavigate } from "react-router-dom";
 import clienteAxios from "../config/clienteAxios";
 import useAuth from "../Hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { queryBy } from "../helpers/queryBy.jsx";
 
 const TrabajosContext = createContext()
 
@@ -10,33 +11,26 @@ const TrabajosProvider = ({children}) => {
     const [alerta, setAlerta] = useState({})
     const [trabajos, setTrabajos] = useState([])
     const [trabajo, setTrabajo]  = useState({})
-    const [modalNuevoTrabajo, setModalNuevoTrabajo] = useState(false)
     const [cargando, setCargando] = useState(false)
+    const [modalNuevoTrabajo, setModalNuevoTrabajo] = useState(false)
     const [modalEliminarTrabajo, setModalEliminarTrabajo] = useState(false)
+    // const [modalEditarTrabajo, setModalEditarTrabajo] = useState({})
 
     const {auth} = useAuth()
     const navigate = useNavigate()
     
+    //si el usuario esta autenticado le traemos los trabajos
     useEffect(() => {
-        const obtenerProyectos = async ()=>{
+        const obtenerTrabajos = async ()=>{
             try {
-                const token = localStorage.getItem("token");
-                if(!token) return
-
-                const config ={
-                    headers:{
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-                const {data} = await clienteAxios("/trabajos", config)
-                setTrabajos(data);
+                const data = await queryBy("get", "/trabajos");
+                setTrabajos([data]);
             } catch (error) {
                 console.log(error)
             }
         }
-        return () => {obtenerProyectos()}
-    }, [auth]) //si el usuario esta autenticado le traemos los proyectos
+        return () => {obtenerTrabajos()}
+    }, [auth, trabajos])
     
     const mostrarAlerta = alerta =>{
         setAlerta(alerta)
@@ -46,7 +40,6 @@ const TrabajosProvider = ({children}) => {
     }
 
     const submitTrabajo = async trabajo =>{
-        console.log(trabajo);
         if(trabajo.id){
             await editarTrabajo(trabajo)
         }else{
@@ -55,25 +48,13 @@ const TrabajosProvider = ({children}) => {
     }
 
     const nuevoTrabajo = async trabajo =>{
-        console.log("nuevo"); 
         try {
-            // obtener token del usuario (permisos)
-            const token = localStorage.getItem("token")
-            if(!token) return
-            // pasar token como bearer token
-            const config ={
-                headers:{
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
-            }
-            // enviar peticion al backend
-            const {data} = await clienteAxios.post("/trabajos", trabajo, config)
+            const data = await queryBy("post", "/trabajos", trabajo)
             setAlerta({msg: "Trabajo creado correctamente", error: false})
-
+            
             // tomar copia de los trabajos anteriores y agregar el nuevo para evitar doble consulta en base de datos
             setTrabajos([...trabajos, data])
-
+            
             setTimeout(() => {
                 setAlerta({})
                 setModalNuevoTrabajo(false)
@@ -87,19 +68,8 @@ const TrabajosProvider = ({children}) => {
     const obtenerTrabajo = async id =>{
         setCargando(true)
         try {
-            const token = localStorage.getItem("token")
-            if(!token) return
-
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
-            }
-
-            const {data} = await clienteAxios(`/trabajos/${id}`, config)
-            setTrabajo(data)
-
+            const data = await queryBy("get",`/trabajos/${id}`)
+            setTrabajo(data.trabajo)
         } catch (error) {
             setAlerta({
                 msg: error.response.data.msg,
@@ -137,47 +107,53 @@ const TrabajosProvider = ({children}) => {
         }
     }
 
-    const eliminarTrabajo = async id =>{
-        try {
-            const token = localStorage.getItem("token")
-            if(!token) return
+    // const eliminarTrabajo = async id =>{
+    //     try {
+    //         const token = localStorage.getItem("token")
+    //         if(!token) return
 
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
-            }
+    //         const config = {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         }
+    //         //eliminar de db
+    //         const {data} = await clienteAxios.delete(`/trabajos/${id}`, config)
 
-            const {data} = await clienteAxios.delete(`/trabajos/${id}`, config) //eliminar de db
+    //         // eliminar del state
+    //         const trabajosActualizados = trabajos.filter(trabajoState => trabajoState._id !== id)
 
-            // eliminar del state
-            const trabajosActualizados = trabajos.filter(trabajoState => trabajoState._id !== id)
+    //         setTrabajos(trabajosActualizados)
 
-            setTrabajos(trabajosActualizados)
+    //         setAlerta({
+    //             msg: data.msg,
+    //             error: false
+    //         })
 
-            setAlerta({
-                msg: data.msg,
-                error: false
-            })
-
-            setTimeout(() => {
-                navigate("/trabajos")
-                setAlerta({})
-            }, 3000);
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    //         setTimeout(() => {
+    //             navigate("/trabajos")
+    //             setAlerta({})
+    //         }, 3000);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     const changeModalTrabajo = ()=>{
         setModalNuevoTrabajo(!modalNuevoTrabajo)
     }
 
-    const handleModalEliminarTrabajo = ()=>{
-        setModalEliminarTrabajo(!modalEliminarTrabajo)
+    const handleModalEditarTrabajo = ()=>{
+        // setModalEditarTrabajo(!modalEditarTrabajo)
+        
     }
 
+    const handleModalEliminarTrabajo = trabajo =>{
+        // setModalEliminarTrabajo(!modalEliminarTrabajo)
+        setTrabajo(trabajo)
+        console.log(trabajo)
+    }
 
     return (
         <TrabajosContext.Provider
@@ -191,11 +167,12 @@ const TrabajosProvider = ({children}) => {
                 nuevoTrabajo,
                 alerta,
                 mostrarAlerta,
-                eliminarTrabajo,
+                // eliminarTrabajo,
                 editarTrabajo,
                 cargando,
                 handleModalEliminarTrabajo,
-                modalEliminarTrabajo
+                modalEliminarTrabajo,
+                handleModalEditarTrabajo
             }}
         >
             {children}
