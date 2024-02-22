@@ -2,11 +2,13 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState, useEffect } from 'react'
 import useTrabajos from '../Hooks/useTrabajos'
 import Alerta from './Alerta'
+import useClientes from '../Hooks/useClientes'
 
 export default function ModalTrabajo() {
 
-    const {modalTrabajo, changeModalTrabajo, alerta, mostrarAlerta, submitTrabajo, trabajo} = useTrabajos()
-    
+    const {modalTrabajo, changeModalTrabajo, alerta, mostrarAlerta, submitTrabajo, trabajo} = useTrabajos();
+    const { clientes } = useClientes();
+
     const [id, setId] = useState("")
     const [cliente, setCliente] = useState("")
     const [ubicacion, setUbicacion] = useState("")
@@ -46,7 +48,6 @@ export default function ModalTrabajo() {
             return
         }
         await submitTrabajo({id, cliente, ubicacion, hectareas, agroquimico, fecha})
-
         setCliente("")
         setUbicacion("")
         setHectareas("")
@@ -98,18 +99,16 @@ export default function ModalTrabajo() {
                                                 </svg>
                                             </label>
                                             <select 
-                                                // type="text"
-                                                // id='cliente'
-                                                // name='cliente'
-                                                // placeholder='nombre del cliente'
-
-                                                // value={cliente}
-                                                // onChange={handleChange(setCliente)}
-                                                >
-                                                 <option>seleccione</option>
-                                                 <option>1</option>
-                                                 <option>1</option>
-                                                 <option>1</option>
+                                                className='w-full p-2 rounded-md text-gray-600 border'
+                                                onChange={ handleChange(setCliente) }    
+                                                value={cliente}
+                                            >
+                                                {clientes.map( cliente => (
+                                                    <option key={cliente._id} value={cliente._id}>
+                                                        {cliente.nombre}
+                                                    </option>
+                                                    ))
+                                                } 
                                             </select>    
                                         </div>
                                         <div className='mb-4'>

@@ -2,6 +2,7 @@ import { Navigate, Outlet } from "react-router-dom"
 import useAuth from "../Hooks/useAuth.jsx"
 import Header from "../Components/Header.jsx"
 import Sidebar from "../Components/Sidebar.jsx"
+import ModalTrabajo from "../Components/ModalTrabajo.jsx"
 
 const RutaProtegida = () => {
 
@@ -24,7 +25,7 @@ const RutaProtegida = () => {
                     </div>
                 </>
             ) : <Navigate to="/"/>}
-            
+            <ModalTrabajo/> 
         </>
     )
 }

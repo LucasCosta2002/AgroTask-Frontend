@@ -1,5 +1,3 @@
-import ModalConfirmar from "../Components/ModalConfirmar"
-import ModalTrabajo from "../Components/ModalTrabajo"
 import TableRow from "../Components/TableRow"
 import useTrabajos from "../Hooks/useTrabajos"
 
@@ -36,8 +34,6 @@ const Trabajos = () => { //outlet
                     </tbody>
                 </table>
             </div>
-            <ModalTrabajo/> 
-
         </>
     )
 }

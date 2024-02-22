@@ -6,6 +6,7 @@ import { queryBy } from "../helpers/queryBy.jsx";
 
 const TrabajosContext = createContext()
 
+// eslint-disable-next-line react/prop-types
 const TrabajosProvider = ({children}) => {
 
     const [alerta, setAlerta] = useState({})
@@ -39,6 +40,8 @@ const TrabajosProvider = ({children}) => {
     }
 
     const submitTrabajo = async trabajo =>{
+        console.log(trabajo)
+        return
         if(trabajo.id){
             await editarTrabajo(trabajo)
         }else{
@@ -48,6 +51,8 @@ const TrabajosProvider = ({children}) => {
 
     const nuevoTrabajo = async trabajo =>{
         try {
+
+            console.log(trabajo)
             const data = await queryBy("post", "/trabajos", trabajo)
             setAlerta({msg: "Trabajo creado correctamente", error: false})
             
