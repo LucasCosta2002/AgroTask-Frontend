@@ -14,6 +14,7 @@ import Clientes from './pages/Clientes.jsx'
 import Resumen from './pages/Resumen.jsx'
 import Trabajo from './pages/Trabajo.jsx'
 
+// eslint-disable-next-line react/prop-types
 
 function App() {
 	return (

@@ -12,9 +12,8 @@ const TrabajosProvider = ({children}) => {
     const [trabajos, setTrabajos] = useState([])
     const [trabajo, setTrabajo]  = useState({})
     const [cargando, setCargando] = useState(false)
-    const [modalNuevoTrabajo, setModalNuevoTrabajo] = useState(false)
+    const [modalTrabajo, setModalTrabajo] = useState(false)
     const [modalEliminarTrabajo, setModalEliminarTrabajo] = useState(false)
-    // const [modalEditarTrabajo, setModalEditarTrabajo] = useState({})
 
     const {auth} = useAuth()
     const navigate = useNavigate()
@@ -57,7 +56,7 @@ const TrabajosProvider = ({children}) => {
             
             setTimeout(() => {
                 setAlerta({})
-                setModalNuevoTrabajo(false)
+                setModalTrabajo(false)
             }, 3000);
 
         } catch (error) {
@@ -107,59 +106,61 @@ const TrabajosProvider = ({children}) => {
         }
     }
 
-    // const eliminarTrabajo = async id =>{
-    //     try {
-    //         const token = localStorage.getItem("token")
-    //         if(!token) return
+    const eliminarTrabajo = async id =>{
+        try {
+            const token = localStorage.getItem("token")
+            if(!token) return
 
-    //         const config = {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 Authorization: `Bearer ${token}`
-    //             }
-    //         }
-    //         //eliminar de db
-    //         const {data} = await clienteAxios.delete(`/trabajos/${id}`, config)
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            //eliminar de db
+            const {data} = await clienteAxios.delete(`/trabajos/${id}`, config)
 
-    //         // eliminar del state
-    //         const trabajosActualizados = trabajos.filter(trabajoState => trabajoState._id !== id)
+            // eliminar del state
+            const trabajosActualizados = trabajos.filter(trabajoState => trabajoState._id !== id)
 
-    //         setTrabajos(trabajosActualizados)
+            setTrabajos(trabajosActualizados)
 
-    //         setAlerta({
-    //             msg: data.msg,
-    //             error: false
-    //         })
+            setAlerta({
+                msg: data.msg,
+                error: false
+            })
 
-    //         setTimeout(() => {
-    //             navigate("/trabajos")
-    //             setAlerta({})
-    //         }, 3000);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
+            setTimeout(() => {
+                navigate("/trabajos")
+                setModalEliminarTrabajo(false)
+                setAlerta({})
 
-    const changeModalTrabajo = ()=>{
-        setModalNuevoTrabajo(!modalNuevoTrabajo)
+            }, 3000);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    const handleModalEditarTrabajo = ()=>{
-        // setModalEditarTrabajo(!modalEditarTrabajo)
-        
+    const changeModalTrabajo = () =>{
+        setTrabajo({});
+        setModalTrabajo(!modalTrabajo);
+    }
+
+    const handleModalEditarTrabajo = trabajo =>{
+        setTrabajo(trabajo)
+        setModalTrabajo(true)
     }
 
     const handleModalEliminarTrabajo = trabajo =>{
-        // setModalEliminarTrabajo(!modalEliminarTrabajo)
+        setModalEliminarTrabajo(!modalEliminarTrabajo)
         setTrabajo(trabajo)
-        console.log(trabajo)
     }
 
     return (
         <TrabajosContext.Provider
             value={{
                 changeModalTrabajo,
-                modalNuevoTrabajo,
+                modalTrabajo,
                 submitTrabajo,
                 trabajos,
                 trabajo,
@@ -167,7 +168,7 @@ const TrabajosProvider = ({children}) => {
                 nuevoTrabajo,
                 alerta,
                 mostrarAlerta,
-                // eliminarTrabajo,
+                eliminarTrabajo,
                 editarTrabajo,
                 cargando,
                 handleModalEliminarTrabajo,

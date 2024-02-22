@@ -50,7 +50,6 @@ const Trabajo = () => {
                             </button>
                         </div>
                         
-                        <ModalConfirmar trabajo={trabajo}/>
                         <h2 className="bg-mi-verde rounded-md text-white inline-block p-2 text-xl font-semibold">{cliente}</h2>
                         <p className="mb-1 mt-3 text-green-800">Ubicación: {ubicacion}</p>
                         <p className="mb-1 text-green-800">Hectáreas: {hectareas}</p>

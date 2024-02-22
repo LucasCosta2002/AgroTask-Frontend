@@ -1,17 +1,37 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import useTrabajos from '../Hooks/useTrabajos'
 import Alerta from './Alerta'
 
 export default function ModalTrabajo() {
 
-    const {modalNuevoTrabajo, changeModalTrabajo, alerta, mostrarAlerta, submitTrabajo, trabajo} = useTrabajos()
+    const {modalTrabajo, changeModalTrabajo, alerta, mostrarAlerta, submitTrabajo, trabajo} = useTrabajos()
     
+    const [id, setId] = useState("")
     const [cliente, setCliente] = useState("")
     const [ubicacion, setUbicacion] = useState("")
     const [hectareas, setHectareas] = useState("")
     const [agroquimico, setAgroquimico] = useState("")
     const [fecha, setFecha] = useState("")
+
+    //Compruebo si hay un trabajo
+    useEffect(()=>{
+		if(trabajo?._id){
+			setCliente(trabajo.cliente);
+			setHectareas(trabajo.hectareas);
+			setUbicacion(trabajo.ubicacion);
+			setAgroquimico(trabajo.agroquimico);
+			setFecha(trabajo.fecha);
+            setId(trabajo._id)
+			return
+		}
+
+		setCliente('')
+		setHectareas('')
+		setUbicacion('')
+		setAgroquimico('')
+		setFecha('')
+	},[trabajo])
 
     // nuevo: se crea una funcion que toma un state y le asignamos el evento
     const handleChange = setState => e =>{
@@ -25,7 +45,7 @@ export default function ModalTrabajo() {
             mostrarAlerta({msg: "Todos los campos son obligatorios", error: true})
             return
         }
-        await submitTrabajo({cliente, ubicacion, hectareas, agroquimico, fecha})
+        await submitTrabajo({id, cliente, ubicacion, hectareas, agroquimico, fecha})
 
         setCliente("")
         setUbicacion("")
@@ -33,12 +53,12 @@ export default function ModalTrabajo() {
         setAgroquimico("")
         setFecha("")
     }
-
+    
     const {msg} = alerta;
 
     return (
         <>
-            <Transition appear show={modalNuevoTrabajo} as={Fragment}>
+            <Transition appear show={modalTrabajo} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={changeModalTrabajo}>
                     <Transition.Child
                         as={Fragment}
@@ -109,6 +129,8 @@ export default function ModalTrabajo() {
                                                 className='w-full p-2 rounded-md text-gray-600 border'
                                                 value={ubicacion}
                                                 onChange={handleChange(setUbicacion)}
+                                                //forma anterior
+                                                //onChange={e => setUbicacion(e.target.value)})}
                                                 />
                                         </div>
                                         <div className='mb-4'>

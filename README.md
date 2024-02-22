@@ -1,8 +1,11 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Innesesario crear tantas vistas, puedo usar modales para mostrar la informacion de todo
 
-Currently, two official plugins are available:
+traer los nombres del cliente y del usuario, vienen como id pero no sirve
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+El modelo del trabajo toma un cliente, ese cliente debe estar previamente creado por cualquier usuario. Cuando creas un trabajo le pasas el id del cliente, este va a venir en una consulta y sera impreso en un select. Entonces el trabajo va a tener usuario/maquinista y un cliente asociado de forma separada sin bidireccionalidad.
+
+
+agregar algunos toast
+
+11/09: reemplazar skeleton por una plantita que gire. Intentar agregar paginador. Mover formulario trabjo a un componente para reutilizar, ajustar, componetizar codigo repetido, por ejemplo botones
