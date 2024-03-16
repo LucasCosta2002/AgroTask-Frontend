@@ -1,10 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import useTrabajos from '../Hooks/useTrabajos'
+import useWorks from '../Hooks/useWorks'
 
-export default function ModalConfirmar({trabajo}) {
+export default function ModalEliminarTrabajo({work}) {
 
-    const {handleModalEliminarTrabajo, modalEliminarTrabajo, eliminarTrabajo} = useTrabajos()    
+    const {handleModalEliminarTrabajo, modalEliminarTrabajo, eliminarTrabajo} = useWorks()    
 
     return (
         <>
@@ -47,7 +47,7 @@ export default function ModalConfirmar({trabajo}) {
                                         <button
                                             type="button"
                                             className="bg-red-600 text-white font-bold p-2 rounded-md hover:bg-red-700 transition-all"
-                                            onClick={()=> eliminarTrabajo(trabajo._id)}
+                                            onClick={()=> eliminarTrabajo(work._id)}
                                         >Estoy Seguro
                                         </button>
                                     </div>

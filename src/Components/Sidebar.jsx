@@ -1,27 +1,27 @@
 import { Link } from 'react-router-dom'
 import useAuth from '../Hooks/useAuth'
-import useTrabajos from '../Hooks/useTrabajos';
+import useWorks from '../Hooks/useWorks';
 const Sidebar = () => {
 
     const {auth} = useAuth();
-    const {changeModalTrabajo} = useTrabajos();
+    const {changeModalWork} = useWorks();
 
     return (
         <aside className='flex flex-col gap-5 p-4 pt-0 md:w-1/5'>
-            <p className='font-bold text-xl'>Hola {auth.nombre}</p>
+            <p className='font-bold text-xl'>Hola {auth.name}</p>
             <Link 
                 className='shadow-md bg-green-600 p-3 md:p-2 font-bold text-white text-center rounded-md hover:bg-green-700 transition-all text-xl md:text-base'
-                to="/trabajos">Mis Trabajos
+                to="/works">Trabajos
             </Link>
             <Link 
                 className='shadow-md bg-green-600 p-3 md:p-2 font-bold text-white text-center rounded-md hover:bg-green-700 transition-all text-xl md:text-base'
-                to={"/trabajos/resumen"}>Reportes
+                to={"/works/resumen"}>Reportes
             </Link>
             <Link 
                 className='shadow-md bg-green-600 p-3 md:p-2 font-bold text-white text-center rounded-md hover:bg-green-700 transition-all text-xl md:text-base' 
-                to={"/trabajos/clientes"}>Mis Clientes
+                to={"/clients"}>Clientes
             </Link>
-            <button className='shadow-md bg-green-600 p-3 md:p-2 font-bold text-white text-center rounded-md hover:bg-green-700 transition-all text-xl md:text-base' onClick={changeModalTrabajo}>+ Nuevo Trabajo</button>
+            <Link to="/works" className='shadow-md bg-green-600 p-3 md:p-2 font-bold text-white text-center rounded-md hover:bg-green-700 transition-all text-xl md:text-base' onClick={changeModalWork}>+ Nuevo Trabajo</Link>
         </aside>
     )
 }

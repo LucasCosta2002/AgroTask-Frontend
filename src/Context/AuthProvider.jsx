@@ -8,7 +8,6 @@ const AuthProvider = ({children}) => {
 
     const [auth, setAuth] = useState({})
     const [cargando, setCargando] = useState(true)
-    const [modalCerrarSesion, setModalCerrarSesion] = useState(false)
     const navigate = useNavigate()
     
     const cerrarSesion = ()=>{
@@ -16,9 +15,7 @@ const AuthProvider = ({children}) => {
         localStorage.removeItem("token")
         navigate("/")
     }
-    const handleModalCerrarSesion = ()=>{
-        setModalCerrarSesion(!modalCerrarSesion)
-    }
+
 
     useEffect(() => {
         const autenticarUsuario = async ()=>{
@@ -39,11 +36,11 @@ const AuthProvider = ({children}) => {
 
             try {
                 // traer el perfil desde base de datos
-                const {data} = await clienteAxios("/usuarios/perfil", config)
+                const {data} = await clienteAxios("/users/perfil", config)
                 
                 setAuth(data)
 
-                navigate("/trabajos")
+                navigate("/works")
             } catch (error) {
                 setAuth({});
             }    
@@ -59,9 +56,6 @@ const AuthProvider = ({children}) => {
                 setAuth,
                 auth,
                 cargando,
-                handleModalCerrarSesion,
-                modalCerrarSesion,
-                setModalCerrarSesion,
                 cerrarSesion
             }}
         >

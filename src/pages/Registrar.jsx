@@ -5,11 +5,11 @@ import clienteAxios from "../config/clienteAxios"
 
 const Registrar = () => {
 
-	const [nombre, setNombre] = useState("")
+	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
-	const [telefono, setTelefono] = useState("")
+	const [phone, setPhone] = useState("")
 	const [password, setPassword] = useState("")
-	const [repetirPassword, setRepetirPassword] = useState("")
+	const [passwordRepeat, setPasswordRepeat] = useState("")
 	const [alerta, setAlerta] = useState({})
 
 
@@ -17,14 +17,14 @@ const Registrar = () => {
 		
 		e.preventDefault()
 
-		if ([nombre, email, telefono, password, repetirPassword].includes("")) {
+		if ([name, email, phone, password, passwordRepeat].includes("")) {
 			setAlerta({
 				msg: "Todos los campos son obligatorios",
 				error: true
 			})
 			return
 		}
-		if (password !== repetirPassword) {
+		if (password !== passwordRepeat) {
 			setAlerta({
 				msg: "Las Contraseñas no coinciden",
 				error: true
@@ -41,14 +41,14 @@ const Registrar = () => {
 
 		//Despues de las validaciones, crear el objeto usuario y pasarlo a la api
 		try {
-			const {data} = await clienteAxios.post(`/usuarios`, {nombre, email, password, telefono})
+			const {data} = await clienteAxios.post(`/users`, {name, email, password, phone})
 			setAlerta({msg: data.msg, error: false})
 
-			setNombre("")
+			setName("")
 			setEmail("")
 			setPassword("")
-			setTelefono("")
-			setRepetirPassword("")
+			setPhone("")
+			setPasswordRepeat("")
 
 		} catch (error) {
 			setAlerta({msg: error.response.data.msg, error: true});
@@ -70,15 +70,15 @@ const Registrar = () => {
 			<h3 className="text-center text-2xl font-bold text-green-600">Creá tu cuenta</h3>
 
 			<div className="font-bold mt-5 mb-3">
-				<label htmlFor="nombre" className="block mb-4 text-green-600">Nombre</label>
+				<label htmlFor="name" className="block mb-4 text-green-600">Nombre</label>
 				<input 
 					type="text" 
-					name="nombre" 
-					id="nombre" 
+					name="name" 
+					id="name" 
 					placeholder="Juan Pérez"
 					className="bg-campos w-full p-2 rounded-lg shadow-md font-normal"
-					value={nombre}
-					onChange={e => setNombre(e.target.value)}
+					value={name}
+					onChange={e => setName(e.target.value)}
 					/>
 			</div>
 			<div className="font-bold mt-5 mb-3">
@@ -94,15 +94,15 @@ const Registrar = () => {
 					/>
 			</div>
 			<div className="font-bold mt-5 mb-3">
-				<label htmlFor="telefono" className="block mb-4 text-green-600">Telefono</label>
+				<label htmlFor="phone" className="block mb-4 text-green-600">Telefono</label>
 				<input 
 					type="tel" 
-					name="telefono" 
-					id="telefono" 
+					name="phone" 
+					id="phone" 
 					placeholder="1234 567890"
 					className="bg-campos w-full p-2 rounded-lg shadow-md font-normal"
-					value={telefono}
-					onChange={e => setTelefono(e.target.value)}
+					value={phone}
+					onChange={e => setPhone(e.target.value)}
 					/>
 			</div>
 			<div className="font-bold my-5">
@@ -125,8 +125,8 @@ const Registrar = () => {
 					id="password2" 
 					className="bg-campos w-full p-2 rounded-lg shadow-md font-normal"
 					placeholder="******"
-					value={repetirPassword}
-					onChange={e => setRepetirPassword(e.target.value)}
+					value={passwordRepeat}
+					onChange={e => setPasswordRepeat(e.target.value)}
 					/>
 			</div>
             {msg && <Alerta alerta={alerta}/>}

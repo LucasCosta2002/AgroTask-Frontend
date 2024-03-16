@@ -27,11 +27,11 @@ const Login = () => {
 		}
 
 		try {
-			const {data} = await clienteAxios.post("/usuarios/login", {email, password});
+			const {data} = await clienteAxios.post("/users/login", {email, password});
 			localStorage.setItem("token", data.token)
 			setAlerta({})
 			setAuth(data)
-			navigate("/trabajos")
+			navigate("/works")
 		} catch (error) {
 			setAlerta({
 				msg: error.response.data.msg,

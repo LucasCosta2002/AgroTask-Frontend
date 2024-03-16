@@ -1,23 +1,16 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import useAuth from '../Hooks/useAuth'
-import useWorks from '../Hooks/useWorks';
-export default function ModalCerrarSesion() {
+import useClients from '../Hooks/useClients'
 
-    const {cerrarSesion} = useAuth();
-    const {modalCerrarSesion, handleModalCerrarSesion, cerrarSesionTrabajos } = useWorks();
-    
-    const handleCerrarSesion = ()=>{
-        cerrarSesion()
-        cerrarSesionTrabajos()
+// eslint-disable-next-line react/prop-types
+export default function ModalClientDelete({id}) {
 
-        localStorage.removeItem("token")
-    }
-    
+    const {handleModalDelete, modalDelete, deleteClient} = useClients()
+
     return (
         <>
-            {/* <Transition appear show={modalCerrarSesion} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={handleModalCerrarSesion}>
+            <Transition appear show={modalDelete } as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={handleModalDelete}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -44,14 +37,18 @@ export default function ModalCerrarSesion() {
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="h3"
-                                        className="text-lg text-center font-medium leading-6 text-gray-900"
-                                    >¿Deseas cerrar la Sesión?
+                                        className="text-lg font-medium leading-6 text-gray-900"
+                                    >¿Deseas eliminar este Cliente?
                                     </Dialog.Title>
+                                    <div className="mt-2">
+                                        <p className="text-sm text-gray-500">Si borrás este Cliente no hay forma de recuperarlo.</p>
+                                    </div>
+
                                     <div className="mt-4 flex justify-center">
                                         <button
                                             type="button"
                                             className="bg-red-600 text-white font-bold p-2 rounded-md hover:bg-red-700 transition-all"
-                                            onClick={handleCerrarSesion}
+                                            onClick={() => deleteClient(id)}
                                         >Estoy Seguro
                                         </button>
                                     </div>
@@ -60,7 +57,7 @@ export default function ModalCerrarSesion() {
                         </div>
                     </div>
                 </Dialog>
-            </Transition> */}
+            </Transition>
         </>
     )
 }

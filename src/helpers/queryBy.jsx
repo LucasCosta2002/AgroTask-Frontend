@@ -2,7 +2,6 @@ import clienteAxios from "../config/clienteAxios.jsx"
 
 export const queryBy = async (verb, url, object ) => {
 
-    try {
         const token = localStorage.getItem("token");
         if(!token) return;
         
@@ -31,7 +30,4 @@ export const queryBy = async (verb, url, object ) => {
         }
 
         return response.data;
-    } catch (error){
-        console.log(error);
-    }
 }

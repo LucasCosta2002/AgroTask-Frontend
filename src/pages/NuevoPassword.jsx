@@ -18,7 +18,7 @@ const NuevoPassword = () => {
         // comprobarToken al cargar la pagina
         const comprobarToken = async ()=>{
             try {
-                await clienteAxios.get( `/usuarios/olvide-password/${token}`)
+                await clienteAxios.get( `/users/olvide-password/${token}`)
                 setTokenValido(true)
             } catch (error) {
                 setAlerta({
@@ -42,7 +42,7 @@ const NuevoPassword = () => {
         }
         try {
             //a la url con el token le pasamos el password leido al backend que lo hashea y guarda
-            const url = `/usuarios/olvide-password/${token}`
+            const url = `/users/olvide-password/${token}`
             const {data} = await clienteAxios.post(url, {password})
             setAlerta({
                 msg: data.msg,

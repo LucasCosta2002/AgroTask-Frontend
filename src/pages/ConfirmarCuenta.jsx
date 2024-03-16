@@ -15,7 +15,7 @@ const ConfirmarCuenta = () => {
         //leer de la url y enviar token al backend para que lo confirme
         const confirmarCuenta = async ()=>{
             try {
-                const {data} = await clienteAxios.get(`/usuarios/confirmar/${id}`)
+                const {data} = await clienteAxios.get(`/users/confirmar/${id}`)
                 setAlerta({
                     msg: data.msg,
                     error: false

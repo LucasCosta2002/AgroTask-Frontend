@@ -6,14 +6,14 @@ import OlvidePassword from './pages/OlvidePassword'
 import NuevoPassword from './pages/NuevoPassword'
 import ConfirmarCuenta from './pages/ConfirmarCuenta'
 import { AuthProvider } from './Context/AuthProvider.jsx'
-import { TrabajosProvider } from './Context/TrabajosProvider'
-import { ClientesProvider } from './Context/ClientesProvider.jsx'
+import { WorksProvider } from './Context/WorksProvider'
+import { ClientsProvider } from './Context/ClientsProvider.jsx'
 
 import RutaProtegida from './layouts/RutaProtegida.jsx'
 import Trabajos from './pages/Trabajos.jsx'
-import Clientes from './pages/Clientes.jsx'
+import Clients from './pages/Clients.jsx'
 import Resumen from './pages/Resumen.jsx'
-import Trabajo from './pages/Trabajo.jsx'
+// import Trabajo from './pages/Trabajo.jsx'
 
 // eslint-disable-next-line react/prop-types
 
@@ -21,8 +21,8 @@ function App() {
 	return (
 		<BrowserRouter>
 			<AuthProvider>
-				<TrabajosProvider>
-					<ClientesProvider>
+				<WorksProvider>
+					<ClientsProvider>
 						<Routes>
 							{/* rutas publicas*/}
 							<Route path='/' element={<AuthLayout/>}>
@@ -34,18 +34,20 @@ function App() {
 								<Route path="confirmar/:id" element={<ConfirmarCuenta/>}/>
 							</Route>	
 
-						{/* rutas privadas */}
-							<Route path='/trabajos' element={<RutaProtegida/>}>
+							{/* rutas privadas */}
+							<Route path='/works' element={<RutaProtegida/>}>
 								{/* todos los archivos se inyectan como outlet de RutaProtegida */}
 								<Route index element={<Trabajos/>}/>
 								<Route path='resumen' element={<Resumen/>}/>
-								<Route path='clientes' element={<Clientes/>}/>
-								<Route path=':id' element={<Trabajo/>}/>
 								{/* <Route path='editar/:id' element={<EditarTrabajo/>}/> */}
 							</Route>
+							
+							<Route path='/clients' element={<RutaProtegida/>}>
+								<Route index element={<Clients/>}/>
+							</Route>
 						</Routes>
-					</ClientesProvider>
-				</TrabajosProvider>
+					</ClientsProvider>
+				</WorksProvider>
 			</AuthProvider>
 		</BrowserRouter>
 	)
